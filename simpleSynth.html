@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Simple Synth</title>
+		<meta name="generator" content="Bootply" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
+	<body style="background: goldenrod;">
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+
+
+    </div>
+    <div class="collapse navbar-collapse">
+
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+
+<div id="osc">
+
+	<style>
+		#osc {
+			background-color: slategrey;
+			width: 200px;
+			height: 200px;
+			border-radius: 10%;
+			border: solid black 4px;
+			margin: auto;
+		}
+		form {
+			padding: 30px;
+		}
+
+	</style>
+
+
+<form align="center">
+  <select name="wave-form" id="waveform">
+    <option value="sine" selected>sine</option>
+    <option value="triangle">triangle</option>
+    <option value="sawtooth">sawtooth</option>
+    <option value="square">square</option>
+  </select>
+
+	<br><br>
+
+<input id="oscPitch" type="range" min="50" max="5000" step="1" value="900"/>
+
+</form>
+
+</div>
+
+
+		<script type="text/javascript">
+			var context = new(window.AudioContext || window.webkitAudioContext)();
+			var oscillator = context.createOscillator();
+			var gain = context.createGain()
+
+			var osc = document.getElementById("osc");
+			osc.onmousedown=function(){
+			var oscPitch = document.getElementById('oscPitch').value;
+
+			oscillator.frequency.value = oscPitch;
+			var waveform = document.getElementById("waveform").value;
+			oscillator.type = waveform;
+
+			oscillator.connect(context.destination);
+			oscillator.start(0);
+		};
+
+		osc.onmouseup = function(){
+			oscillator.disconnect();
+		};
+
+
+		//keypress and release
+		onkeydown=function(){
+		var oscPitch = document.getElementById('oscPitch').value;
+
+		oscillator.frequency.value = oscPitch;
+		var waveform = document.getElementById("waveform").value;
+		oscillator.type = waveform;
+
+		oscillator.connect(context.destination);
+		oscillator.start(0);
+	};
+
+	onkeyup = function(){
+		oscillator.disconnect();
+	};
+
+		</script>
+
+
+
+	</body>
+</html>
